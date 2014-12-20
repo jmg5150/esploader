@@ -18,6 +18,7 @@ C:\Users\Esther\Desktop\Mathijs\esploader\0.1\ESPLoader\obj\Debug\ResolveAssembl
 C:\Users\Esther\Desktop\Mathijs\esploader\0.1\ESPLoader\obj\Debug\ESPLoader.Form1.resources
 C:\Users\Esther\Desktop\Mathijs\esploader\0.1\ESPLoader\obj\Debug\ESPLoader.Properties.Resources.resources
 C:\Users\Esther\Desktop\Mathijs\esploader\0.1\ESPLoader\obj\Debug\ESPLoader.csproj.GenerateResource.Cache
+<<<<<<< HEAD
 C:\Users\Esther\Desktop\Mathijs\esploader\0.2alpha1\ESPLoader\obj\Debug\ESPLoader.exe
 C:\Users\Esther\Desktop\Mathijs\esploader\0.2alpha1\ESPLoader\obj\Debug\ESPLoader.pdb
 C:\Users\Esther\Desktop\Mathijs\esploader\0.2alpha1\ESPLoader\bin\Debug\ESPLoader.exe
@@ -28,6 +29,8 @@ C:\Users\Esther\Desktop\Mathijs\esploader\0.2alpha1\ESPLoader\obj\Debug\ResolveA
 C:\Users\Esther\Desktop\Mathijs\esploader\0.2alpha1\ESPLoader\obj\Debug\ESPLoader.Form1.resources
 C:\Users\Esther\Desktop\Mathijs\esploader\0.2alpha1\ESPLoader\obj\Debug\ESPLoader.Properties.Resources.resources
 C:\Users\Esther\Desktop\Mathijs\esploader\0.2alpha1\ESPLoader\obj\Debug\ESPLoader.csproj.GenerateResource.Cache
+=======
+>>>>>>> 0.2
 C:\Users\Jonathan\Documents\esploader\0.2alpha1\ESPLoader\obj\Debug\ESPLoader.exe
 C:\Users\Jonathan\Documents\esploader\0.2alpha1\ESPLoader\obj\Debug\ESPLoader.pdb
 C:\Users\Jonathan\Documents\esploader\0.2alpha1\ESPLoader\bin\Debug\ESPLoader.exe
