@@ -19,11 +19,6 @@ namespace ESPLoader
         {
         }
 
-        public virtual string PortType()
-        {
-            return "[UNKNOWN]";
-        }
-
         public virtual int OpenPort(string port_name, int baud_rate)
         {
             return -1;

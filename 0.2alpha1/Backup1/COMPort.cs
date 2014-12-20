@@ -23,11 +23,6 @@ namespace ESPLoader
             _serialPort.DataReceived += DataReceived;
         }
 
-        public override string PortType()
-        {
-            return "[" + _serialPort.PortName + "]";
-        }
-
         public override int OpenPort(string port_name, int baud_rate)
         {
             _serialPort.PortName = port_name.Substring(6);

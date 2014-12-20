@@ -64,20 +64,6 @@ namespace ESPLoader
             UpdateStatus("Ready!");
         }
 
-
-        public bool AddBinaryFile(SourceFile source)
-        {
-            if(source.isValid)
-            {
-                BinFiles.Add(source);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
         public bool AddBinaryFile(string full_filename, int write_to_address)
         {
             SourceFile newsource = new SourceFile(full_filename, write_to_address);
@@ -355,7 +341,7 @@ namespace ESPLoader
             return response;
         }
 
-        private void flash_begin(int ImageLen, Int64 Address)
+        private void flash_begin(int ImageLen, int Address)
         {
             _port.DiscardBuffers();
 
@@ -445,7 +431,7 @@ namespace ESPLoader
 
         }
 
-        private void flash_chunks(Int64 offset, byte[] flashdata)
+        private void flash_chunks(int offset, byte[] flashdata)
         {
             int seq = 0;
             int blocks = 0;

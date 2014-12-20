@@ -33,10 +33,6 @@ namespace ESPLoader
                 _ftdiPort.Close();
         }
 
-        public override string PortType()
-        {
-            return "[FTDI]";
-        }
 
         public override int OpenPort(string port_name, int baud_rate)
         {

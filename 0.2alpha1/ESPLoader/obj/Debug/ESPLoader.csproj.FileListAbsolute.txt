@@ -28,3 +28,13 @@ C:\Users\Esther\Desktop\Mathijs\esploader\0.2alpha1\ESPLoader\obj\Debug\ResolveA
 C:\Users\Esther\Desktop\Mathijs\esploader\0.2alpha1\ESPLoader\obj\Debug\ESPLoader.Form1.resources
 C:\Users\Esther\Desktop\Mathijs\esploader\0.2alpha1\ESPLoader\obj\Debug\ESPLoader.Properties.Resources.resources
 C:\Users\Esther\Desktop\Mathijs\esploader\0.2alpha1\ESPLoader\obj\Debug\ESPLoader.csproj.GenerateResource.Cache
+C:\Users\Jonathan\Documents\esploader\0.2alpha1\ESPLoader\obj\Debug\ESPLoader.exe
+C:\Users\Jonathan\Documents\esploader\0.2alpha1\ESPLoader\obj\Debug\ESPLoader.pdb
+C:\Users\Jonathan\Documents\esploader\0.2alpha1\ESPLoader\bin\Debug\ESPLoader.exe
+C:\Users\Jonathan\Documents\esploader\0.2alpha1\ESPLoader\bin\Debug\ESPLoader.pdb
+C:\Users\Jonathan\Documents\esploader\0.2alpha1\ESPLoader\bin\Debug\FTD2XX_NET.dll
+C:\Users\Jonathan\Documents\esploader\0.2alpha1\ESPLoader\bin\Debug\FTD2XX_NET.xml
+C:\Users\Jonathan\Documents\esploader\0.2alpha1\ESPLoader\obj\Debug\ESPLoader.csprojResolveAssemblyReference.cache
+C:\Users\Jonathan\Documents\esploader\0.2alpha1\ESPLoader\obj\Debug\ESPLoader.Form1.resources
+C:\Users\Jonathan\Documents\esploader\0.2alpha1\ESPLoader\obj\Debug\ESPLoader.Properties.Resources.resources
+C:\Users\Jonathan\Documents\esploader\0.2alpha1\ESPLoader\obj\Debug\ESPLoader.csproj.GenerateResource.Cache

@@ -11,11 +11,11 @@ namespace ESPLoader
     {
         public string Filepath { get; private set; }
         public string ShortName { get; private set; }
-        public Int64 MemoryLocation { get; private set; }
+        public int MemoryLocation { get; private set; }
         public byte[] Contents { get; private set; }
         public bool isValid { get; private set; }
 
-        public SourceFile(string filepath, Int64 memorylocation)
+        public SourceFile(string filepath, int memorylocation)
         {
             Filepath = filepath;
             MemoryLocation = memorylocation;

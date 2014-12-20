@@ -20,64 +20,98 @@ namespace ESPLoader
         InterfacePort port = new InterfacePort();
         ESP8266ProgrammingTool esp = new ESP8266ProgrammingTool();
 
+        List<SourceFile> BinaryFilesToFlash;
+        bool COMisOpened;
+
         public Form1()
         {
             InitializeComponent();
+
+            BinaryFilesToFlash = new List<SourceFile>();
+            cboMemoryLocation.SelectedIndex = 0;
+            
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            COMisOpened = false;
             esp.StatusChange += StatusChange;
             ((Control)this.tabTCPServer).Enabled = false;
 
         }
 
-
-
         void StatusChange(object sender, EventArgs e)
         {
-            log.AppendText(esp.CurrentStatus + "\r\n");
+            tsStatusLabel.Text = "[PROGRAMMER] " + esp.CurrentStatus;
+
+            if (esp.CurrentStatus == "Finished")
+                tsProgrammingProgress.Visible = false;
+            else
+            {
+                tsProgrammingProgress.Visible = true;
+                tsProgrammingProgress.Value = (int)esp.PercentComplete;
+            }
+            
+            statusStrip.Refresh();
         }
 
-        private void btnOpen_Click(object sender, EventArgs e)
+        private void btnProgrammingInterface_Click(object sender, EventArgs e)
         {
-            // Fix this, Should be in Interface port class
-
-
-            if (cboPorts.Text.StartsWith("[COM]"))
+            if(COMisOpened)
             {
-                port = new COMPort();
-            }
-            if (cboPorts.Text.StartsWith("[FTDI]"))
-            {
-                port = new FTDIPort();
-            }
+                if (port.Close() == 0)
+                {
+                    tsCOMStatusLabel.Text = port.PortType() + " Port is Closed!";
+                    btnProgrammingInterface.Text = "Open";
+                    COMisOpened = false;
 
-            if (port.OpenPort(cboPorts.Text,75000) == 0)
-            {
-                esp.SetInterface(ref port);
-
-                log.AppendText("Port open success!\r\n");
-                timer1.Enabled = true;
+                    cboPorts.Enabled = true;
+                    btnReset.Enabled = false;
+                    btnFlash.Enabled = false;
+                }
+                else
+                {
+                    tsCOMStatusLabel.Text = port.PortType() + " Error - couldn't close!";
+                }
             }
             else
             {
-                log.AppendText("Error opening port '" + cboPorts.Text + "'\r\n");
+                if (cboPorts.Text.StartsWith("[COM]"))
+                {
+                    port = new COMPort();
+                }
+                if (cboPorts.Text.StartsWith("[FTDI]"))
+                {
+                    port = new FTDIPort();
+                }
+
+                if (port.OpenPort(cboPorts.Text, 75000) == 0)
+                {
+                    esp.SetInterface(ref port);
+
+                    tsCOMStatusLabel.Text = port.PortType() + " Port is Open!";
+                    btnProgrammingInterface.Text = "Close";
+                    COMisOpened = true;
+
+                    cboPorts.Enabled = false;
+                    btnFlash.Enabled = true;
+                    
+                    if(port.PortType() == "[FTDI]")
+                    {
+                        btnReset.Enabled = true;
+                    }
+
+                    timer1.Enabled = true;
+                }
+                else
+                {
+                    tsCOMStatusLabel.Text = port.PortType() + " Error - couldn't open!";
+                }
+
             }
+
         }
 
-        private void btnClose_Click(object sender, EventArgs e)
-        {
-            if (port.Close() == 0)
-            {
-                log.AppendText("Closing port!\r\n");
-
-            }
-            else
-            {
-                log.AppendText("Error closing port!\r\n");
-            }
-        }
 
         private void btnReset_Click(object sender, EventArgs e)
         {
@@ -86,45 +120,12 @@ namespace ESPLoader
 
         private void btnFlash_Click(object sender, EventArgs e)
         {
+            foreach(SourceFile file in BinaryFilesToFlash)
+            {
+                esp.AddBinaryFile(file);
+            }
+
             esp.Flash();
-        }
-
-        private void btnOpenFiles_Click(object sender, EventArgs e)
-        {
-            DialogResult result;
-            string file;
-
-            openFileDialog.Title = "Select 0x00000.bin file";
-            openFileDialog.FileName = "0x00000.bin";
-            result = openFileDialog.ShowDialog();
-            file = openFileDialog.FileName;
-            try
-            {
-                esp.AddBinaryFile(file, 0x00000);
-                f1.Text = file;
-            }
-            catch (IOException)
-            {
-                log.AppendText("Cannot open file " + file + "\r\n");
-                f1.Text = "";
-            }
-
-            openFileDialog.Title = "Select 0x40000.bin file";
-            openFileDialog.FileName = "0x40000.bin";
-            result = openFileDialog.ShowDialog();
-            file = openFileDialog.FileName;
-            try
-            {
-                esp.AddBinaryFile(file, 0x40000);
-                f2.Text = file;
-            }
-            catch (IOException)
-            {
-                log.AppendText("Cannot open file " + file + "\r\n");
-                f2.Text = "";
-            }
-
-            log.AppendText("Done Opening files\r\n");
         }
 
         private void aboutESPLoaderToolStripMenuItem_Click(object sender, EventArgs e)
@@ -154,14 +155,95 @@ namespace ESPLoader
             Application.Exit();
         }
 
-        private void groupBox1_Enter(object sender, EventArgs e)
+
+        private void txtFilePath_TextChanged(object sender, EventArgs e)
         {
+            if (txtFilePath.Text == "[Double-Click to Select File]" || txtFilePath.Text == "")
+                btnAddFile.Enabled = false;
+            else
+                btnAddFile.Enabled = true;
 
         }
 
+        private void txtFilePath_DoubleClick(object sender, EventArgs e)
+        {
+            DialogResult result;
+            string file;
 
+            openFileDialog.Title = "Select .bin file";
+            openFileDialog.FileName = "";
+            openFileDialog.Filter = "(*.bin)|*.bin|All files (*.*)|*.*";
+            result = openFileDialog.ShowDialog();
 
- 
+            if(result != System.Windows.Forms.DialogResult.Cancel)
+            {
+                file = openFileDialog.FileName;
+                try
+                {
+                    txtFilePath.Text = file;
+                }
+                catch (IOException)
+                {
+                    MessageBox.Show("Cannot open file " + file);
+                    txtFilePath.Text = "[Double-Click to Select File]";
+                }
+            }
+        }
 
+        private void btnAddFile_Click(object sender, EventArgs e)
+        {
+
+            string hex_number = cboMemoryLocation.Text.ToString();
+            hex_number = hex_number.Substring(2);
+            Int64 mem_location = Int64.Parse(hex_number, System.Globalization.NumberStyles.HexNumber);
+
+            BinaryFilesToFlash.Add(new SourceFile(txtFilePath.Text, mem_location));
+
+            txtFilePath.Text = "[Double-Click to Select File]";
+
+            UpdateFileListBox();
+
+        }
+
+        private void UpdateFileListBox()
+        {
+            lstFiles.Items.Clear();
+
+            foreach(SourceFile file in BinaryFilesToFlash)
+            {
+                lstFiles.Items.Add("0x" + file.MemoryLocation.ToString("X5") + ", " + file.ShortName);
+            }
+
+            if (BinaryFilesToFlash.Count() > 0)
+                btnClearAllFiles.Enabled = true;
+            else
+            {
+                btnClearAllFiles.Enabled = false;
+                btnRemove.Enabled = false;
+
+            }
+                
+        }
+
+        private void btnClearAllFiles_Click(object sender, EventArgs e)
+        {
+            BinaryFilesToFlash.Clear();
+            UpdateFileListBox();
+
+        }
+
+        private void lstFiles_Click(object sender, EventArgs e)
+        {
+            if (lstFiles.SelectedIndex != -1)
+                btnRemove.Enabled = true;
+            else
+                btnRemove.Enabled = false;
+        }
+
+        private void btnRemove_Click(object sender, EventArgs e)
+        {
+            BinaryFilesToFlash.RemoveAt(lstFiles.SelectedIndex);
+            UpdateFileListBox();
+        }
     }
 }
